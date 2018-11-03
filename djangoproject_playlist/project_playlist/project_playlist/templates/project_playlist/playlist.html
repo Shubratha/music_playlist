@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ playlist.name }}</title>
+</head>
+<body>
+    <h2> {{ playlist.name }} </h2>
+    
+    {% if is_owner %}
+    <form action="{{playlist.id}}" method="POST">   
+        <p> 
+                {% csrf_token %}
+                Song url:<input type="text" name="url">
+                Song name:<input type="text" name="name" ><br>
+                <input type="submit" value="Add song">
+        </p>
+
+    </form>
+    {% endif %}
+    
+    <p>
+        {% for song in playlist.song_set.all %}
+            <label >
+                <a href="{{ song.url }}" >{{song.name}} </a> <br>
+                <object data="{{ song.embed_url }}" 
+   width="560" height="315"></object> <br>
+            </label><br>
+        {% endfor %}
+        
+    </p>
+       
+        
+
+</body>
+</html>

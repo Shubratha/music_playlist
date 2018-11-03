@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My playlists</title>
+    <style>
+        h1 {
+            text-align: center;
+            font-family: Roboto, Arial;
+        }
+        .form-container {
+            width: 640px;
+            margin: 0 auto;
+            height: 3em;
+            padding: 40px;
+        }
+        .playlist-container {
+            width: 85%;
+            margin: 0 auto;
+        }
+        .form-container input[type="text"] {
+            width: 67%;
+            padding: 12px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+            margin-right: 1%;
+        }
+        button[type="submit"] {
+            width: 170px;
+            height: 40px;
+            background-color: cornflowerblue;
+            color: white;
+            font-size: medium;
+            text-transform: uppercase;
+            font-weight: bold;
+            border: 1px solid blue;
+            border-radius: 4px;
+        }
+        .btn-container {
+            float: left;
+            width: 18.35%;
+            min-height: 250px;
+            background-color: cornflowerblue;
+            border-radius: 6px;
+            box-sizing: border-box;
+            padding: 10px;
+            margin: 10px; 
+            text-align: center;
+        }
+        .btn-container button {
+            width: 170px;
+            height: 40px;
+            margin: 5px 0;
+        }
+        .clear-fix {
+            clear: both;
+        }
+        button {
+            cursor: pointer;
+        }
+
+    </style>
+</head>
+<body>
+    <h1>Your Saved Playlists are shown here: </h1>
+
+    <div class="form-container">
+        <form  method="POST" >
+            {% csrf_token %}
+        <input type="text" name="title" >
+        <button type="submit" > Create playlist </button>
+        </form>
+    </div>
+
+    <div class="playlist-container">
+
+        {% for playlist in playlists %}
+        <div class="btn-container">
+            <label for="{{forloop.counter}}">
+            <img src="https://a10.gaanacdn.com/images/artists/44/27844/crop_175x175_27844.jpg" />
+            </label>
+            <button id="{{forloop.counter}}" onclick="location.href ='playlist/{{playlist.id}}';" align="middle">{{playlist.name}}</button> 
+        </div>
+        {% endfor %}
+        <div class="clear-fix"></div>
+    </div>
+
+</body>
+</html>

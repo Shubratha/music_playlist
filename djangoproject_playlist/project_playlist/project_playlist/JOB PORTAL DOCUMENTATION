@@ -1,0 +1,717 @@
+##########################################################################################################
+
+##########################################################################################################
+
+                                      
+
+                                        JOB PORTAL DOCUMENTATION 
+
+##########################################################################################################
+
+                                            API COUNT    : 20
+
+                                            MODEL COUNT  : 12
+
+##########################################################################################################
+
+##########################################################################################################
+
+Requirements :
+
+1. Users :
+
+     There would be four types of users. They are
+
+            1.Administrators,
+
+            2.Represtatives,
+
+            3.Recruiters,
+
+            4.Applicants.
+
+2. Recruites creates Job Posts and pays for them to the Administrators.
+
+3. Representatives are the ones who approves or verifies the Job Posts.
+
+4. Profile for the Applicatans should consists of the following things as follows,
+
+            1.Educational Qualifications,
+
+            2.Work Experience,
+
+            3.Extra Curricular Activities,
+
+            4.Technical Skills,
+
+            5.Projects,
+
+            6.External Links (Social Networks or may be Projects).
+
+            7.Resume,
+
+            8.Interests.
+
+5. Administrator manages the Job Portal.
+
+##########################################################################################################
+
+##########################################################################################################
+
+API :
+
+1. For Administrator:
+
+    1. Search Users:
+
+        URL : /api/users/?search=<created-date/location/user-type/
+
+        METHOD : POST
+        INPUT:
+           {
+                "created_on/location/user-type": "<date/location/type>"
+            }
+
+        OUTPUT:
+
+            {
+
+                "users": [
+
+                            {},
+
+                    "has_more": true
+
+                ]   
+
+            }
+
+        Extended Form :
+
+            URL : /api/users/?page=<page_no>
+
+
+    2. List of Jobs:
+
+        URL : /api/job-postings/?search=<location/company/date>
+
+        METHOD : POST
+        INPUT: 
+            {
+                "created_on/location/company": "<date/location/company-name>"
+            }
+
+        OUTPUT: 
+
+                {
+
+                    "jobs": [
+
+                        {},
+
+                        "has_more": true
+
+                    ]   
+
+                }
+
+
+##########################################################################################################
+
+2. For Representatives:
+
+   1. List of Recruiters:
+
+        URL : /api/recruiters
+
+        METHOD : GET - List of Assosiated Recruiters
+
+        OUTPUT :
+
+                {
+
+                    "recruiters":
+
+                                [
+
+                                    "user" :
+
+                                            {},
+
+                                            {},          
+
+                                ]
+
+                }
+
+
+    //4. List of Reviews:
+
+(search)
+
+        URL : /api/my-jp-workqueue
+
+        METHOD : GET - List of Reviews
+
+        OUPUT:
+
+            {
+
+                "jobs":
+
+                    [
+
+                        {},
+
+                        {},
+
+                    ]
+
+            }
+
+    5. Approval of job posting:
+
+        URL : /api/job_posting/<jp_id>
+
+        METHOD : PATCH - Approve or Disapprove a Review
+
+        INPUT:
+
+            {
+
+                "job": {},
+
+                time:
+
+            }
+
+        OUTPUT:
+
+            {
+
+                status_code : 200
+
+            }
+
+###########################################################################################################
+
+3. For Recruiters:
+
+    
+
+    1. sign up for Recruiter: (3rd party recruiter)
+
+        URL : /api/recruiters/profile
+
+    
+
+        METHOD : POST - Create Recruiter
+
+        INPUT:
+
+            {
+
+                "user":[ 
+
+                    {
+
+                        "Username": "<username>",
+
+                        "Password": "<password>",
+
+                        "Firstname": "<firstname>",
+
+                        "Lastname": "<lastname>",
+
+                        "Email": "<email>",
+
+                        "Contact_Number": "<phone_number>",
+
+                        "DOB": "<DOB>",
+
+                    }
+
+                ]
+
+            }
+
+        OUTPUT:
+
+            {
+
+                "<username>": "User created Sucessfully"
+
+            }
+
+    2. Modification of Recruiter:
+
+        URL : /api/recruiters/<User_id>
+
+        **   api/profile
+
+    
+
+        METHOD : GET - Views his own profile
+
+                 OUPUT:
+
+                    {
+
+                        "user": {},
+
+                    }
+
+                 PUT/PATCH - Updation of Recruiter
+
+                 INPUT :
+
+                    {  
+
+                        "user": {},
+
+                        "address": []
+
+                        "educational qualification": [],
+
+                        "work experience": [],
+
+                        "company": {},
+
+                        "profile_picture": {},
+
+                     }
+
+                 OUTPUT:
+
+                    {
+
+                        "<username>" : "User Created Successfully"
+
+                    }
+
+                 DELETE - Deletion of Recruiter
+
+                 OUTPUT:
+
+                    {
+
+                        "<username>": "User Deleted Sucessfully"
+
+                    }
+
+    3.Create and List a Job Post :
+
+        URL : /api/recruiters/<User_id>/jobs/
+
+    
+
+        METHOD : GET - Lists of Posted Jobs by <username>
+
+                 OUTPUT:
+
+                    {
+
+                        "jobs" : 
+
+                        [
+
+                            {},
+
+                            {},
+
+                        ]
+
+                    }
+
+                 POST - Create a Job Post
+
+                 INPUT:
+
+                    {
+
+                        "job" : {},
+
+                    }
+
+                 OUTPUT:
+
+                    {
+
+                        "<job_name" : "Job Created Successfully",
+
+                    }
+
+    4. Lists of Applicants:
+
+        URL : /api/job-postings/<job_id>/applicants
+
+    
+
+        METHOD : GET - Lists of Applicants for that <job_id>
+
+        OUTPUT:
+
+            {
+
+                "users" : 
+
+                [
+
+                    {},
+
+                    {},
+
+                ]
+
+            }
+
+    5. Get Applicant:
+
+        URL : /api/applicants/<profile_id>
+
+    
+
+        METHOD : GET - Get the <applicant_id> for that <job_id>
+
+        OUTPUT:
+
+            {
+
+                "user" : {},
+
+            }
+
+    6.Modification of a Job Post:
+
+        URL : /api/recruiters/<User_id>/jobs/<job_id>
+
+        METHOD : GET - Details of that Job Post
+
+                 OUTPUT:
+
+                    {
+
+                        "job" : {},
+
+                    }
+
+                 PUT/PATCH - Modification of that Job Post
+
+                    
+
+                 INPUT:
+
+                    {
+
+                        "job" : {},
+
+                    }
+
+                 OUTPUT:
+
+                    {
+
+                        "<job_name>" : "Job Updated Successfully",
+
+                    }
+
+###########################################################################################################
+
+4. For Applicants:
+
+    1. Create Applicants:
+
+        URL : /api/applicants/
+
+        METHOD : POST - Create Applicant
+
+    2. Modification of Profile:
+
+        URL : /api/applicants/<User_id>
+
+        METHOD : GET - Views his own profile
+
+                 OUTPUT:
+
+                    {
+
+                        "user": {},
+
+                    }
+
+                 PUT/PATCH - Updation of Recruiter
+
+                 INPUT:
+
+                    {
+
+                        "user":{},
+
+                        "address": {}
+
+                        "educational qualification": {},
+
+                        "work experience": {},
+
+                        "company": {},
+
+                        "profile_picture": {},
+
+                        "resume": {},
+
+                    }
+
+                 OUTPUT:
+
+                    {
+
+                        "<username>" : "User updated Successfully"
+
+                    }
+
+                 DELETE - Deletion of Recruiter
+
+                    
+
+                 OUTPUT:
+
+                    {
+
+                        "<username>" : "User Deleted Successfully"
+
+                    }
+
+    3. List of Applied Jobs :
+
+        URL : /api/my-applied-jobs
+
+        METHOD : GET - Lists of Applied Jobs by <username>
+
+        OUTPUT:
+
+            {
+
+                "applied_jobs" : 
+
+                [
+
+                    {},
+
+                    {},
+
+                ]
+
+            }
+
+    4. List of Jobs :
+
+        URL : /api/applicants/<User_id>/jobs/?type=search
+
+        METHOD : GET - Lists of Jobs by <username>
+
+        OUTPUT:
+
+            {
+
+                "jobs" :
+
+                [
+
+                    {},
+
+                    {},
+
+                ]
+
+            }
+
+##########################################################################################################
+
+##########################################################################################################
+
+MODELS :
+
+    Applicant Model Fields:
+
+            1. User (foreign key to user)
+
+            2. Address (foreign key to Address)
+
+            3. Educational Qualification (foreign key to Qualification)
+
+            4. Work Experience (foreign key to Experience)
+
+            5. Projects (foreign key to Project)
+
+            6. Extra Curricular Activities
+
+            7. Resume (foreign key to File)
+
+            8. Profile Picture (foreign key to File)
+
+            9. Status ["active","inactive"]
+
+    Qualification Model Fields:
+
+            1. Id
+
+            2. Qualification Level ["10","12","UG","PG"]
+
+            3. Institute or School Name
+
+            4. Date of Joining
+
+            5. Date of Completing
+
+            6. Specialization
+
+            7. Percentage or Grade
+
+            8. Type of Course ["full-time","part-time"]
+
+    Experience Model Fields:
+
+            1. Id
+
+            2. Organisation Name
+
+            3. Role
+
+            4. Experience in Years
+
+            5. Role Description
+
+    Project Model Fields:
+
+            1. Id
+
+            2. Title
+
+            3. Duration
+
+            4. Description
+
+            5. External Links
+
+    File Model Fileds:
+
+            1. Id
+
+            2. Name
+
+            3. Type ["pdf","jpg","png","jpeg"]
+
+            4. Path
+
+    Address Model Fileds:
+
+            1. Id
+
+            2. Address_line 1
+
+            3. Address_line 2
+
+            4. City
+
+            5. State
+
+            6. Country
+
+            7. Postal Code
+
+    
+
+    Recruiter Model Fields:
+
+            1. User (foreign key to user)
+
+            2. Address (foreign key to Address)
+
+            3. Educational Qualification (foreign key to Qualification)
+
+            4. Work Experience (foreign key to Experience)
+
+            5. Company (foreign key to Comapany)
+
+            6. Picture (foreign key to File)
+
+            7. Job Posts (foreign key to Job Post)
+
+    Job Post Model Fields:
+
+            1. Id
+
+            2. Recruiter_User_id
+
+            3. Representative_User_id
+
+            4. Role
+
+            5. Company (foreign key to Company)
+
+            6. Applied_User_id []
+
+            7. Description
+
+            8. Status ["created","published","hold","expired"]
+
+            9. Created On
+
+            10. Approval_Status ["Approved","Pending"]
+
+    Company Model Fields:
+
+            1. Id
+
+            2. Name
+
+            3. Description
+
+            4. Address (foreign key to Address)
+
+            5. Contact Number
+
+            6. Email
+
+    Representative Model Fields:
+
+            1. User (foreign key to user)
+
+            2. Address (foreign key to Address)
+
+            3. Company (foreign key to Comapany)
+
+            4. Work Experience (foreign key to Experience)
+
+            5. Picture (foreign key to File)
+
+    User Model Fields:
+
+            1. User_id (UUID)
+
+            2. Username
+
+            3. Password
+
+            4. Firstname
+
+            5. Lastname
+
+            6. Email
+
+            7. Contact Number
+
+            8. DOB
+
+            9. User_type ["seeker","recruiter","representative","administrator"]
+
+            10 Created On
+
+    Administrator Model Fields:
+
+            1. User (foreign key to user)
+
+##########################################################################################################
+
+##########################################################################################################
+
